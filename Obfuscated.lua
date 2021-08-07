@@ -162,24 +162,21 @@ if game.PlaceId == 1417427737 then
 
 
         --Auto Mine
+        local LocalPlayer = game.Players.LocalPlayer
+        local HumanoidRootPart = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+        local Remote = game.ReplicatedStorage.Network:InvokeServer()
+        local Blocks = game.Workspace.Blocks
+        
         spawn(function()
             while true do
                 if getgenv().AutoMine == true then
-                    local HumanoidRootPart = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-                    local depth = Split(game.Players.LocalPlayer.PlayerGui.ScreenGui.TopInfoFrame.Depth.Text," ")
                     if HumanoidRootPart then
-                        if tonumber(depth[1]) > 160 then
-                            minp = HumanoidRootPart.CFrame + Vector3.new(-10,-10,-10)
-                            maxp = HumanoidRootPart.CFrame + Vector3.new(10,10,10)
-                        else
-                            minp = HumanoidRootPart.CFrame + Vector3.new(-1,-10,-1)
-                            maxp = HumanoidRootPart.CFrame + Vector3.new(1,0,1)
-                        end
-                        local region = Region3.new(minp.Position, maxp.Position)
-                        local parts = workspace:FindPartsInRegion3WithWhiteList(region, {game.Workspace.Blocks}, 100) --  ignore part
-                        local Remote = game.ReplicatedStorage.Network:InvokeServer()
+                        local min = HumanoidRootPart.CFrame + Vector3.new(-15,-10,-15)
+                        local max = HumanoidRootPart.CFrame + Vector3.new(15,10,15)
+                        local region = Region3.new(min.Position, max.Position)
+                        local parts = workspace:FindPartsInRegion3WithWhiteList(region, {Blocks}, 50) --  ignore part
                         for each, block in pairs(parts) do
-                            if block:IsA("BasePart") and getgenv().AutoMine == true then
+                            if block:IsA("BasePart") and (block.Position - HumanoidRootPart.Position).magnitude <= 20 then
                                 Remote:FireServer("MineBlock",{{block.Parent}})
                                 wait()
                             end
@@ -911,12 +908,12 @@ if game.PlaceId == 1417427737 then
         local PatchNotes_Tab = Window:NewTab("Patch Notes")
 
 
-        local PatchNotes_Section = PatchNotes_Tab:NewSection("Latest Update:  08/06/2021")
+        local PatchNotes_Section = PatchNotes_Tab:NewSection("Latest Update:  08/07/2021")
 
-        PatchNotes_Section:NewButton("-Auto Mine fixed", "", function()
+        PatchNotes_Section:NewButton("-Auto Mine Updated", "", function()
         end)
 
-        PatchNotes_Section:NewButton("-Auto Sell uses empty private mines now", "", function()
+        PatchNotes_Section:NewButton("", "", function()
         end)
 
         print("Loaded Mining Simulator V2 BY GuentherHade#0159")
