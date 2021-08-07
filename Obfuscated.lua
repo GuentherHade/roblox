@@ -1,7 +1,7 @@
 --Waitng and Checking
 repeat wait() until game:IsLoaded()
 if game.PlaceId == 1417427737 then
-	if getfenv().running_instance ~= true then
+	if getgenv().running_instance ~= true then
 		getgenv().running_instance = true
         repeat wait() until game:IsLoaded() and
         game.Workspace:FindFirstChild("Blocks") and
