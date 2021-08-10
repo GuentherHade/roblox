@@ -792,7 +792,7 @@ if game.PlaceId == 1417427737 then
 
 
         --Library
-        local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+        local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/GuentherHade/roblox/main/UI.lua"))()
 
 
         local Window = Library.CreateLib("Mining Simulator", "Sentinel")
